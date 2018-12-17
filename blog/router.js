@@ -1,5 +1,6 @@
 var express = require('express')
 var User = require('./models/user')
+var Comment = require('./models/comment')
 var md5 = require('blueimp-md5')
 
 var router = express.Router()
@@ -120,6 +121,26 @@ router.get('/logout', function (req, res) {
   // 重定向到登录页
   res.redirect('/login')  
 })
+
+router.get('/views/topics/new',(req,res,next)=>{
+  res.render('topics/new.html',{
+    user: req.session.user
+  })
+})
+
+router.post('/views/topics/new',(req,res,next)=>{
+  var body = req.body
+  new Comment(body).save((err,data)=>{
+    if(err){
+      return next(err)
+    }
+    res.status(200).json({
+      err_code: 0,
+      message: 'OK'
+    })
+  })
+})
+
 
 // router.post('/register', async function (req, res) {
 //   var body = req.body

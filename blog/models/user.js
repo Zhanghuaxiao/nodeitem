@@ -8,7 +8,7 @@ var Schema = mongoose.Schema
 var userSchema = new Schema({
   email: {
     type: String,
-    required: true
+    required: true  
   },
   nickname: {
     type: String,

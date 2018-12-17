@@ -8,6 +8,7 @@ var app = express()
 
 app.use('/public/', express.static(path.join(__dirname, './public/')))
 app.use('/node_modules/', express.static(path.join(__dirname, './node_modules/')))
+// app.use('/views/', express.static(path.join(__dirname, './views/')))
 
 // 在 Node 中，有很多第三方模板引擎都可以使用，不是只有 art-template
 // ejs、jade（pug）、handlebars、nunjucks

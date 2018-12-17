@@ -1,0 +1,48 @@
+{{extend '../_layouts/home.html'}} {{block 'title'}}{{'多人博客 - 首页'}}{{/block}} {{block 'body'}}
+<section class="container"></section>
+<div class="row">
+  <div class="col-md-5">
+    <form id="comment_form" method="post" action="/views/topics/new">
+      <div class="form-group">
+        <label for="exampleInputEmail1">选择板块</label>
+        <select class="form-control">
+          <option>分享</option>
+          <option>问答</option>
+          <option>招聘</option>
+          <option>客户端测试</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="email">标题</label>
+        <input type="test" class="form-control" id="title" name="title" placeholder="请输入标题"" autofocus>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">内容</label>
+        <textarea class="form-control" rows="3" id="content" name="content"></textarea>
+      </div>
+      <button type="submit" class="btn btn-success btn-block">提交</button>
+    </form>
+  </div>
+</div>
+</section>
+{{/block}} 
+<script>
+    $('#comment_form').on('submit', function (e) { 
+      e.preventDefault(); 
+      var formData = $(this).serialize();
+      console.log(formData)
+      $.ajax({
+        url: '/views/topics/new',
+        type: 'post',
+        data: formData,
+        dataType: 'json',
+        success: function (data) {
+          var err_code = data.err_code
+          console.log(err_code)
+          if(err_code===0){
+            // window.location.href = '/'
+          }
+        }
+      })
+  }) 
+</script>
