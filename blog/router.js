@@ -6,9 +6,22 @@ var md5 = require('blueimp-md5')
 var router = express.Router()
 
 router.get('/', function (req, res) {
-  // console.log(req.session.user)
-  res.render('index.html', {
-    user: req.session.user
+  var query = Comment.find({});
+  // query.count(function(err, count) {console.log(count)});
+  query.skip(1).limit(2).exec('find', function(err, items) {console.log(items)});
+  Comment.find({},(err,data)=>{
+    var time = []
+    data.forEach(val=>{
+      var dateee = new Date(val.last_modified_time).toJSON();
+      var nowtime = new Date(+new Date(dateee)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'') ; 
+      time.push(nowtime)
+    })
+  res.render('index.html', {  
+    user: req.session.user,
+    title:data,
+    time:time
+    })
+  
   })
 })
 
@@ -130,15 +143,12 @@ router.get('/views/topics/new',(req,res,next)=>{
 
 router.post('/views/topics/new',(req,res,next)=>{
   var body = req.body
-  new Comment(body).save((err,data)=>{
-    if(err){
+  new Comment(body).save(function(err,data){
+    if (err) {
       return next(err)
     }
-    res.status(200).json({
-      err_code: 0,
-      message: 'OK'
-    })
-  })
+    res.redirect('/')
+   })
 })
 
 

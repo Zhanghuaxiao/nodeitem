@@ -26,23 +26,3 @@
 </div>
 </section>
 {{/block}} 
-<script>
-    $('#comment_form').on('submit', function (e) { 
-      e.preventDefault(); 
-      var formData = $(this).serialize();
-      console.log(formData)
-      $.ajax({
-        url: '/views/topics/new',
-        type: 'post',
-        data: formData,
-        dataType: 'json',
-        success: function (data) {
-          var err_code = data.err_code
-          console.log(err_code)
-          if(err_code===0){
-            // window.location.href = '/'
-          }
-        }
-      })
-  }) 
-</script>
